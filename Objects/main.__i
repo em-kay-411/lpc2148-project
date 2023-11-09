@@ -1,0 +1,6 @@
+--c99 --gnu -c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections
+-IC:\Keil_v5\ARM\RV31\INC
+-IC:\Keil_v5\ARM\CMSIS\Include
+-IC:\Keil_v5\ARM\INC\Philips
+-D__UVISION_VERSION="525"
+-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d "main.c"
