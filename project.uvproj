@@ -430,6 +430,16 @@
               <FileType>1</FileType>
               <FilePath>.\boot.c</FilePath>
             </File>
+            <File>
+              <FileName>card.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\card.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SPI.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
