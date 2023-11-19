@@ -102,159 +102,49 @@ void card_init()
 }
 
 
-void card_write(unsigned int sector, unsigned char data)
+void load_kernel(void)
 {
-	unsigned char temp[6] = {0,0,0,0,0,0};
-	printf("\n\nWriting to sector 0x%x\n",sector);
+    unsigned char temp[6] = {0, 0, 0, 0, 0, 0};
+    unsigned int timer = 300;
+    unsigned int kernel_size = 4096;/* Calculate the size of your kernel image */
 
-	sector = sector*512;			 //convert sector address to byte address
-	temp[0] = CMD24[0];
-	temp[4] = sector & 0xFF;		   //pass the address as arguments for CMD24
-	temp[3] = (sector>>8) & 0xFF;
-	temp[2] = (sector>>16) & 0xFF;
+    printf("\n\nLoading Kernel from SD card\n");
+    printf("--CMD17--\n");
 
-	
-	printf("--CMD24--\n");
-	IOCLR0 = SSEL0;					  //chip select low
-	send_cmd(temp);					  //send the CMD24 with arguments
-	spi0_read();				  	 //dummy read
-	spi0_read();
-	spi0_write(0xFE);				 //send 0xFE indicating start of writing data to the SD card
+    temp[0] = CMD17[0];
+    temp[4] = 0; // Set the sector to 0 for the first sector
+    temp[3] = 0;
+    temp[2] = 0;
 
-	printf("Start writing data = 0x%02x\n",data);
-	for(i=0;i<=512;i++)
-		spi0_write(data);			  //write data
+    IOCLR0 = SSEL0; // Chip select low
+    send_cmd(temp); // Send CMD17 with arguments
+    do
+    {
+        ch = spi0_read();
+    } while (ch != 0xFE && --timer);
 
-	spi0_write(0x00);				  //write CRC (0x0000 since CRC check is off)
-	ch = spi0_write(0x00); 
-	delay(1000);
-	if(((ch&0x1F)>>1) == 0x02)				//Check response
-		printf("Write SUCCESS\n");
-	else
-		printf("Write failed\n");
+    if (timer == 0)
+    {
+        printf("Read FAILED\n");
+        while (1);
+    }
 
-	
-	spi0_read(); 						 //dummy read; clock pulses for processing work if any
-	spi0_read();
+    printf("Start reading\n");
+    delay(1000);
 
-	IOSET0 = SSEL0;						//chip select high
-}
+    // Read the entire kernel image
+    for(i = 0; i < kernel_size; i++)
+    {
+        ch = spi0_read();
 
+        // Load the kernel code into RAM
+        *((volatile unsigned char *)(KERNEL_LOAD_ADDRESS + i)) = ch;
+    }
 
+    spi0_read(); // Read CRC (can be ignored)
+    spi0_read();
 
-void card_read(unsigned int sector)
-{
-	unsigned char temp[6] = {0,0,0,0,0,0};
-	unsigned int timer = 300;
-	printf("\n\nReading from sector 0x%x\n",sector);	
-	printf("--CMD17--\n");
+    IOSET0 = SSEL0; // Chip select high
 
-	sector = sector*512;						   	//convert sector address to byte address
-	temp[0] = CMD17[0];
-	temp[4] = sector & 0xFF;					   	//pass the address as arguments for CMD17
-	temp[3] = (sector>>8) & 0xFF;
-	temp[2] = (sector>>16) & 0xFF;
-
-
-	IOCLR0 = SSEL0;								 	//chip select low
-	send_cmd(temp);									//send CMD17 with arguments
-	do												//wait till 0xFE is received indicating start of reading data
-	{
-		ch=spi0_read();							   	
-	}
-	while(ch != 0xFE && --timer);
-
-	if(timer == 0)								  	//if timer runs out before 0xFE is received, Read Failed
-	{
-		printf("Read FAILED\n");
-		while(1);
-	}
-	printf("Start reading\n");
-	delay(1000);
-	for(i=0;i<512;i++)							  	//read data
-		ch=spi0_read();
-
-	spi0_read();							   		//Read CRC (can be ignored)
-	spi0_read();
-
-	IOSET0 = SSEL0;								  	//chip select high
-	printf("Read data = 0x%02x\n",ch);
-	printf("Read SUCCESS\n");
-}
-
-
-
-void card_cid()
-{
-	unsigned char temp[16], i;
-	unsigned char name[6], MID, PRV, Mdate, month, year;
-		
-	printf("--CMD10--\n");
-	IOCLR0 = SSEL0;							//chip select low
-	send_cmd(CMD10);						//send CMD10
-	do
-		ch = spi0_read();
-	while(ch != 0xFE);						//wait till 0xFE received indicating start of read operation
-
-	for(i=0;i<16;i++)						//receive 16 bytes
-		temp[i] = spi0_read();
-	spi0_read();							//CRC (ignore)
-	spi0_read();
-	IOSET0 = SSEL0;							//chip select high
-
-	MID = temp[0];
-	printf("Manufacturer ID: %d\n",MID);				//Display Manufacturer ID (location index 0)
-
-	printf("Application ID: %c%c\n",temp[1],temp[2]);		//Display Application ID (location index 1-2)
-
-	for(i=0;i<5;i++)
-		name[i] = temp[i+3];
-	name[5] = '\0';
-	printf("Product Name: %s\n",name);					//Display Product Name (location index 3-7)
-
-	PRV = temp[8];
-	printf("Product revision: %X.%X\n",(PRV&0xF0)>>4,(PRV&0x0F));  //Display Product Revision (location index 8)
-
-	printf("Sr. No.: ");
-	for(i=0;i<4;i++)
-		printf("%02X", temp[i+9]);				  		//Display Product Serial Number	(location index 9-12)
-
-	Mdate = temp[14];
-	month = Mdate & 0x000F;
-	year = ((Mdate & 0x0FF0) >> 4);
-	printf("\nManufacturing Date: %d/%d\n", month, year);			//Display Manufacturing date (location index 14)
-
-}
-
-void card_csd()
-{
-	unsigned char temp[16], i;
-	unsigned long int C_SIZE=0, C_MUL=0, BL_Len=0;
-	unsigned long int capacity;
-		
-	printf("--CMD9--\n");
-	IOCLR0 = SSEL0;									   	//chip select low
-	send_cmd(CMD9);										//send CMD9
-	do													//wait till 0xFE received indicating start of read operation
-		ch = spi0_read();
-	while(ch != 0xFE);
-
-	for(i=0;i<16;i++)									//receive 16 bytes
-		temp[i] = spi0_read(); 
-	spi0_read();									   	//read CRC (ignore)
-	spi0_read();
-	IOSET0 = SSEL0;										//chip select high
-
-	C_SIZE |= (temp[8] >>6);
-	C_SIZE |= (temp[7] <<2);
-	C_SIZE |= ((temp[6] & 0x03) <<10);
-
-	C_MUL |= (temp[10] >>7);
-	C_MUL |= ((temp[9]& 0x03)  <<1);
-
-	BL_Len = (temp[5] & 0x0F);
-
-	capacity = (C_SIZE+1) * ((double)pow(2,C_MUL+2)) * ((double)pow(2,BL_Len));
-
-	printf("Capacity of the card is %d\n",capacity);
+    printf("Kernel Loaded SUCCESSFULLY\n");
 }

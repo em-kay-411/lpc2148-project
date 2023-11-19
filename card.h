@@ -1,10 +1,9 @@
 #ifndef CARD_H
 #define CARD_H
 
+#define KERNEL_LOAD_ADDRESS 0x2000
+
 void card_init(void);
-void card_write(unsigned int, unsigned char);
-void card_read(unsigned int);
-void card_cid(void);
-void card_csd(void);
+void load_kernel(void);
 
 #endif
