@@ -1,4 +1,5 @@
-.\objects\boot.o: boot.c
-.\objects\boot.o: C:\Keil_v5\ARM\INC\Philips\lpc214x.h
-.\objects\boot.o: SPI.h
-.\objects\boot.o: card.h
+.\Objects\boot.o: boot.c
+.\Objects\boot.o: C:\Keil\ARM\Inc\Philips\lpc214x.h
+.\Objects\boot.o: SPI.h
+.\Objects\boot.o: card.h
+.\Objects\boot.o: interrupts.h

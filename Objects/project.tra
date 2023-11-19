@@ -1,0 +1,23 @@
+*** Creating Trace Output File '.\Objects\project.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\objects\startup.o"'
+### List of Objects: adding '".\objects\boot.o"'
+### List of Objects: adding '".\objects\card.o"'
+### List of Objects: adding '".\objects\spi.o"'
+### List of Objects: adding '".\objects\interrupts.o"'
+### ADS-LD Command completed:
+--cpu ARM7TDMI ".\objects\startup.o" ".\objects\boot.o" ".\objects\card.o" ".\objects\spi.o" ".\objects\interrupts.o" 
+--ro-base 0x00000000 --entry 0x00000000 --rw-base 0x40000000 --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\Listings\project.map" -o .\Objects\project.axf### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Objects\project.axf'
+### ADS-LD Command File: '.\Objects\project.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Objects\project.lnp', Handle=0x00000F3C
+### Writing '.lnp' file
+### ADS-LD Command file '.\Objects\project.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

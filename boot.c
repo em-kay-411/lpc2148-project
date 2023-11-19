@@ -1,6 +1,7 @@
 #include<lpc214x.h>
 #include "SPI.h"
 #include "card.h"
+#include "interrupts.h"
 
 void switchToUserMode(){
 	unsigned int cpsrValue;
@@ -16,8 +17,10 @@ void switchToUserMode(){
 	}
 }
 
-int main(){
-	card_init();			// Initialise card
+int main(){	
+	
+	//card_init(); // Initialise card
+	enable_interrupts();
 	switchToUserMode();		// Switch to user mode
 	
 	while(1);
