@@ -15,3 +15,6 @@ F (.\SPI.c)(0x6552F8D9)(-c --cpu ARM7TDMI -g -O0 --apcs=interwork --split_sectio
 I (C:\Keil\ARM\Inc\Philips\lpc214x.h)(0x4F585AA4)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0F5AE)
 I (SPI.h)(0x6552F8D9)
+F (.\interrupts.c)(0x6554D41F)(-c --cpu ARM7TDMI -g -O0 --apcs=interwork --split_sections -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\Philips -o ".\Objects\interrupts.o" --omf_browse ".\Objects\interrupts.crf" --depend ".\Objects\interrupts.d")
+I (C:\Keil\ARM\Inc\Philips\lpc214x.h)(0x4F585AA4)
+I (interrupts.h)(0x6554D532)
