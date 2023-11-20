@@ -1,1 +1,1 @@
-.\Objects\Startup.o: Startup.s
+.\objects\startup.o: Startup.s

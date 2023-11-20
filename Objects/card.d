@@ -1,6 +1,6 @@
-.\Objects\card.o: card.c
-.\Objects\card.o: C:\Keil\ARM\Inc\Philips\lpc214x.h
-.\Objects\card.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
-.\Objects\card.o: C:\Keil\ARM\ARMCC\bin\..\include\math.h
-.\Objects\card.o: SPI.h
-.\Objects\card.o: card.h
+.\objects\card.o: card.c
+.\objects\card.o: C:\Keil_v5\ARM\INC\Philips\lpc214x.h
+.\objects\card.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\card.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\card.o: SPI.h
+.\objects\card.o: card.h

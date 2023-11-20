@@ -1,3 +1,3 @@
-.\Objects\interrupts.o: interrupts.c
-.\Objects\interrupts.o: C:\Keil\ARM\Inc\Philips\lpc214x.h
-.\Objects\interrupts.o: interrupts.h
+.\objects\interrupts.o: interrupts.c
+.\objects\interrupts.o: C:\Keil_v5\ARM\INC\Philips\lpc214x.h
+.\objects\interrupts.o: interrupts.h

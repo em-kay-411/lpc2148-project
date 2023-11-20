@@ -1,7 +1,9 @@
 #include<lpc214x.h>
+#include<stdio.h>
 #include "SPI.h"
 #include "card.h"
 #include "interrupts.h"
+#include "uart.h"
 
 
 void switchToUserMode(){
@@ -21,9 +23,14 @@ void switchToUserMode(){
 int main(){	
 	
 	// Declaring a function pointer to the address where kernel is being loaded in the RAM
+	
 	void (*kernel_entry_point)() = (void (*)())KERNEL_LOAD_ADDRESS;
 	
-	//card_init(); // Initialise card
+	UartInit(9600);		 							//Initialize UART with 9600 baudrate
+	printf("\nHello\n");
+	printf("Program for MicroSD card\n\n");  
+	
+	card_init(); // Initialise card
 	enable_interrupts();	
 	load_kernel();
 	
