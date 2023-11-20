@@ -4,3 +4,4 @@
 .\objects\card.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\card.o: SPI.h
 .\objects\card.o: card.h
+.\objects\card.o: UART.h

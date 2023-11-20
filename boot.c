@@ -32,7 +32,7 @@ int main(){
 	
 	card_init(); // Initialise card
 	enable_interrupts();	
-	load_kernel();
+	load_kernel(0x00);
 	
 	switchToUserMode();		// Switch to user mode
 	kernel_entry_point();	

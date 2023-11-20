@@ -3,6 +3,7 @@
 #include "math.h"
 #include "SPI.h"
 #include "card.h"
+#include "UART.h" 
 #define CD 1<<22		//Card Detect Pin
 
 
@@ -101,12 +102,54 @@ void card_init()
 		printf("Card Initialization SUCCESS\n\n");
 }
 
+void load_kernel(unsigned int sector)
+{
+	unsigned char temp[6] = {0,0,0,0,0,0};
+	unsigned int timer = 300;
+	printf("\n\nReading from sector 0x%x\n",sector);	
+	printf("--CMD17--\n");
 
+	sector = sector*512;						   	//convert sector address to byte address
+	temp[0] = CMD17[0];
+	temp[4] = sector & 0xFF;					   	//pass the address as arguments for CMD17
+	temp[3] = (sector>>8) & 0xFF;
+	temp[2] = (sector>>16) & 0xFF;
+
+
+	IOCLR0 = SSEL0;								 	//chip select low
+	send_cmd(temp);									//send CMD17 with arguments
+	do												//wait till 0xFE is received indicating start of reading data
+	{
+		ch=spi0_read();							   	
+	}
+	while(ch != 0xFE && --timer);
+
+	if(timer == 0)								  	//if timer runs out before 0xFE is received, Read Failed
+	{
+		printf("Read FAILED\n");
+		while(1);
+	}
+	printf("Start reading\n");
+	delay(1000);
+	for(i=0;i<600;i++){					  	//read data
+		ch=spi0_read();
+		printf("0x%02x\n",ch);
+	}
+
+	spi0_read();							   		//Read CRC (can be ignored)
+	spi0_read();
+
+	IOSET0 = SSEL0;								  	//chip select high
+	printf("Read data = 0x%02x\n",ch);
+	printf("Read SUCCESS\n");
+}
+
+/*
 void load_kernel(void)
 {
     unsigned char temp[6] = {0, 0, 0, 0, 0, 0};
     unsigned int timer = 300;
-    unsigned int kernel_size = 4096;/* Calculate the size of your kernel image */
+    unsigned int kernel_size = 4096;// Calculate the size of your kernel image 
 
     printf("\n\nLoading Kernel from SD card\n");
     printf("--CMD17--\n");
@@ -136,6 +179,8 @@ void load_kernel(void)
     for(i = 0; i < kernel_size; i++)
     {
         ch = spi0_read();
+			
+				printf("%c\n", ch);
 
         // Load the kernel code into RAM
         *((volatile unsigned char *)(KERNEL_LOAD_ADDRESS + i)) = ch;
@@ -148,3 +193,4 @@ void load_kernel(void)
 
     printf("Kernel Loaded SUCCESSFULLY\n");
 }
+*/
