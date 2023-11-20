@@ -4,7 +4,6 @@
 #include "interrupts.h"
 
 
-
 void switchToUserMode(){
 	unsigned int cpsrValue;
 	
@@ -27,9 +26,10 @@ int main(){
 	//card_init(); // Initialise card
 	enable_interrupts();	
 	load_kernel();
-	kernel_entry_point();
 	
 	switchToUserMode();		// Switch to user mode
+	kernel_entry_point();	
+	
 	
 	// Halt
 	while(1);

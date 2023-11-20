@@ -411,6 +411,11 @@
               <FileType>1</FileType>
               <FilePath>.\SPI.c</FilePath>
             </File>
+            <File>
+              <FileName>interrupts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\interrupts.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

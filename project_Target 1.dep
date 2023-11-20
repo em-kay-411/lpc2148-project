@@ -1,6 +1,6 @@
 Dependencies for Project 'project', Target 'Target 1': (DO NOT MODIFY !)
 F (.\Startup.s)(0x6552F8D9)(--cpu ARM7TDMI -g --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\Philips --list ".\Listings\Startup.lst" --xref -o ".\Objects\Startup.o" --depend ".\Objects\Startup.d")
-F (.\boot.c)(0x6559F527)(-c --cpu ARM7TDMI -g -O0 --apcs=interwork --split_sections -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\Philips -o ".\Objects\boot.o" --omf_browse ".\Objects\boot.crf" --depend ".\Objects\boot.d")
+F (.\boot.c)(0x655B0498)(-c --cpu ARM7TDMI -g -O0 --apcs=interwork --split_sections -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\Philips -o ".\Objects\boot.o" --omf_browse ".\Objects\boot.crf" --depend ".\Objects\boot.d")
 I (C:\Keil\ARM\Inc\Philips\lpc214x.h)(0x4F585AA4)
 I (SPI.h)(0x6552F8D9)
 I (card.h)(0x6559EF68)
