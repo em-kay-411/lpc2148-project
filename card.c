@@ -106,6 +106,9 @@ void load_kernel(unsigned int sector)
 {
 	unsigned char temp[6] = {0,0,0,0,0,0};
 	unsigned int timer = 300;
+	unsigned int j = 0;
+	
+	
 	printf("\n\nReading from sector 0x%x\n",sector);	
 	printf("--CMD17--\n");
 
@@ -131,16 +134,26 @@ void load_kernel(unsigned int sector)
 	}
 	printf("Start reading\n");
 	delay(1000);
-	for(i=0;i<600;i++){					  	//read data
+	for(i=0;i<512;i++){				//read data
+		if(ch == 0xFF || ch == 0x00){
+			return;
+		}
 		ch=spi0_read();
-		printf("0x%02x\n",ch);
+		
+		if(j == 16){
+			printf("\n");
+			j = 0;
+		}
+		printf("0x%02x ",ch);
+		*((volatile unsigned char *)(KERNEL_LOAD_ADDRESS + i)) = ch;
+		j++;
 	}
 
 	spi0_read();							   		//Read CRC (can be ignored)
 	spi0_read();
 
 	IOSET0 = SSEL0;								  	//chip select high
-	printf("Read data = 0x%02x\n",ch);
+	printf("Read data from sector 0x%x = 0x%02x\n",sector,ch);
 	printf("Read SUCCESS\n");
 }
 

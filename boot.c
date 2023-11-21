@@ -1,9 +1,9 @@
 #include<lpc214x.h>
-#include<stdio.h>
 #include "SPI.h"
 #include "card.h"
 #include "interrupts.h"
 #include "uart.h"
+#include "stdio.h"
 
 
 void switchToUserMode(){
