@@ -1,5 +1,5 @@
 #include "lpc214x.h"
-#include "stdio.h"
+#include <stdio.h>
 void UartInit(unsigned int baudrate)	  //setting the baud rate for 115200 baud
 {
 	unsigned int FDiv;
@@ -24,6 +24,10 @@ int UART_GetChar(void)
 
 int UART_PutChar(unsigned char Ch)
 {
+	if (Ch == '\n')  {
+    while (!(U0LSR & 0x20));
+    U0THR = 0x0D;                          /* output CR */
+	}
   	while(!(U0LSR & 0x20));
 	return( U0THR = Ch);
 }

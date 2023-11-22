@@ -513,7 +513,7 @@ ARM Macro Assembler    Page 8
   314 00000058         
   315 00000058         ; Setup PLL
   316 00000058                 IF               PLL_SETUP <> 0
-  317 00000058 E59F00A0        LDR              R0, =PLL_BASE
+  317 00000058 E59F00A4        LDR              R0, =PLL_BASE
   318 0000005C E3A010AA        MOV              R1, #0xAA
   319 00000060 E3A02055        MOV              R2, #0x55
   320 00000064         
@@ -549,7 +549,7 @@ C)
   341 00000098         
   342 00000098         ; Setup MAM
   343 00000098                 IF               MAM_SETUP <> 0
-  344 00000098 E59F0064        LDR              R0, =MAM_BASE
+  344 00000098 E59F0068        LDR              R0, =MAM_BASE
   345 0000009C E3A01004        MOV              R1, #MAMTIM_Val
   346 000000A0 E5801004        STR              R1, [R0, #MAMTIM_OFS]
   347 000000A4 E3A01002        MOV              R1, #MAMCR_Val
@@ -571,7 +571,7 @@ C)
   370 000000AC         
   371 000000AC         ; Setup Stack for each mode
   372 000000AC         
-  373 000000AC E59F0054        LDR              R0, =Stack_Top
+  373 000000AC E59F0058        LDR              R0, =Stack_Top
   374 000000B0         
   375 000000B0         ;  Enter Undefined Instruction Mode and set its Stack Po
                        inter
@@ -617,44 +617,47 @@ _Bit
   408 000000F0 E1A0D000        MOV              SP, R0
   409 000000F4 E24DAB01        SUB              SL, SP, #USR_Stack_Size
   410 000000F8         
-  411 000000F8                 ENDIF
-  412 000000F8         
-  413 000000F8         
-  414 000000F8         ; Enter the C code
-  415 000000F8         
-  416 000000F8                 IMPORT           __main
-  417 000000F8 E59F000C        LDR              R0, =__main
-  418 000000FC E12FFF10        BX               R0
-  419 00000100         
-  420 00000100         
-  421 00000100                 IF               :DEF:__MICROLIB
-  427 00000100         ; User Initial Stack & Heap
-  428 00000100 E01FC080 
+  411 000000F8 E321F0D3        MSR              CPSR_c, #Mode_SVC:OR:I_Bit:OR:F
+_Bit
+  412 000000FC         
+  413 000000FC                 ENDIF
+  414 000000FC         
+  415 000000FC         
+  416 000000FC         ; Enter the C code
+  417 000000FC         
+  418 000000FC                 IMPORT           __main
+  419 000000FC E59F000C        LDR              R0, =__main
+  420 00000100 E12FFF10        BX               R0
+  421 00000104         
+  422 00000104         
+  423 00000104                 IF               :DEF:__MICROLIB
+  429 00000104         ; User Initial Stack & Heap
+  430 00000104 E01FC080 
               E01FC000 
               00000000 
               00000000         AREA             |.text|, CODE, READONLY
-  429 00000000         
-  430 00000000                 IMPORT           __use_two_region_memory
-  431 00000000                 EXPORT           __user_initial_stackheap
-  432 00000000         __user_initial_stackheap
-  433 00000000         
-  434 00000000 E59F000C        LDR              R0, =  Heap_Mem
-  435 00000004 E59F100C        LDR              R1, =(Stack_Mem + USR_Stack_Siz
+  431 00000000         
+  432 00000000                 IMPORT           __use_two_region_memory
+  433 00000000                 EXPORT           __user_initial_stackheap
+  434 00000000         __user_initial_stackheap
+  435 00000000         
+  436 00000000 E59F000C        LDR              R0, =  Heap_Mem
+  437 00000004 E59F100C        LDR              R1, =(Stack_Mem + USR_Stack_Siz
 e)
-  436 00000008 E59F2004        LDR              R2, = (Heap_Mem +      Heap_Siz
+  438 00000008 E59F2004        LDR              R2, = (Heap_Mem +      Heap_Siz
 e)
-  437 0000000C E59F3008        LDR              R3, = Stack_Mem
-  438 00000010 E12FFF1E        BX               LR
-  439 00000014                 ENDIF
-  440 00000014         
-  441 00000014         
+  439 0000000C E59F3008        LDR              R3, = Stack_Mem
+  440 00000010 E12FFF1E        BX               LR
 
 
 
 ARM Macro Assembler    Page 11 
 
 
-  442 00000014                 END
+  441 00000014                 ENDIF
+  442 00000014         
+  443 00000014         
+  444 00000014                 END
               00000000 
               00000400 
               00000000 
@@ -682,8 +685,8 @@ Symbol: Stack_Mem
    Definitions
       At line 72 in file Startup.s
    Uses
-      At line 435 in file Startup.s
       At line 437 in file Startup.s
+      At line 439 in file Startup.s
 
 Stack_Top 00000488
 
@@ -722,8 +725,8 @@ Symbol: Heap_Mem
    Definitions
       At line 86 in file Startup.s
    Uses
-      At line 434 in file Startup.s
       At line 436 in file Startup.s
+      At line 438 in file Startup.s
 
 __heap_base 00000000
 
@@ -914,7 +917,7 @@ Relocatable symbols
 
 Symbol: .text
    Definitions
-      At line 428 in file Startup.s
+      At line 430 in file Startup.s
    Uses
       None
 Comment: .text unused
@@ -922,9 +925,9 @@ __user_initial_stackheap 00000000
 
 Symbol: __user_initial_stackheap
    Definitions
-      At line 432 in file Startup.s
+      At line 434 in file Startup.s
    Uses
-      At line 431 in file Startup.s
+      At line 433 in file Startup.s
 Comment: __user_initial_stackheap used once
 2 symbols
 
@@ -1086,6 +1089,7 @@ Symbol: F_Bit
       At line 386 in file Startup.s
       At line 391 in file Startup.s
       At line 396 in file Startup.s
+      At line 411 in file Startup.s
 
 Heap_Size 00000000
 
@@ -1094,7 +1098,7 @@ Symbol: Heap_Size
       At line 82 in file Startup.s
    Uses
       At line 86 in file Startup.s
-      At line 436 in file Startup.s
+      At line 438 in file Startup.s
 
 IRQ_Stack_Size 00000080
 
@@ -1121,15 +1125,16 @@ Symbol: I_Bit
    Uses
       At line 376 in file Startup.s
       At line 381 in file Startup.s
-      At line 386 in file Startup.s
 
 
 
 ARM Macro Assembler    Page 4 Alphabetic symbol ordering
 Absolute symbols
 
+      At line 386 in file Startup.s
       At line 391 in file Startup.s
       At line 396 in file Startup.s
+      At line 411 in file Startup.s
 
 MAMCR_OFS 00000000
 
@@ -1185,14 +1190,14 @@ Symbol: MEMMAP
    Definitions
       At line 353 in file Startup.s
    Uses
-      None
-Comment: MEMMAP unused
 
 
 
 ARM Macro Assembler    Page 5 Alphabetic symbol ordering
 Absolute symbols
 
+      None
+Comment: MEMMAP unused
 Mode_ABT 00000017
 
 Symbol: Mode_ABT
@@ -1224,7 +1229,8 @@ Symbol: Mode_SVC
       At line 42 in file Startup.s
    Uses
       At line 396 in file Startup.s
-Comment: Mode_SVC used once
+      At line 411 in file Startup.s
+
 Mode_SYS 0000001F
 
 Symbol: Mode_SYS
@@ -1249,15 +1255,15 @@ Symbol: Mode_USR
    Uses
       At line 401 in file Startup.s
 Comment: Mode_USR used once
-PINSEL2 E002C014
-
-Symbol: PINSEL2
 
 
 
 ARM Macro Assembler    Page 6 Alphabetic symbol ordering
 Absolute symbols
 
+PINSEL2 E002C014
+
+Symbol: PINSEL2
    Definitions
       At line 219 in file Startup.s
    Uses
@@ -1314,15 +1320,15 @@ Symbol: PLLCON_OFS
 
 PLLCON_PLLC 00000002
 
-Symbol: PLLCON_PLLC
-   Definitions
-      At line 115 in file Startup.s
 
 
 
 ARM Macro Assembler    Page 7 Alphabetic symbol ordering
 Absolute symbols
 
+Symbol: PLLCON_PLLC
+   Definitions
+      At line 115 in file Startup.s
    Uses
       At line 335 in file Startup.s
 Comment: PLLCON_PLLC used once
@@ -1380,14 +1386,14 @@ Symbol: PLL_SETUP
 Comment: PLL_SETUP used once
 SVC_Stack_Size 00000008
 
-Symbol: SVC_Stack_Size
-   Definitions
-
 
 
 ARM Macro Assembler    Page 8 Alphabetic symbol ordering
 Absolute symbols
 
+
+Symbol: SVC_Stack_Size
+   Definitions
       At line 61 in file Startup.s
    Uses
       At line 68 in file Startup.s
@@ -1410,7 +1416,7 @@ Symbol: USR_Stack_Size
    Uses
       At line 72 in file Startup.s
       At line 409 in file Startup.s
-      At line 435 in file Startup.s
+      At line 437 in file Startup.s
 
 VPBDIV E01FC100
 
@@ -1447,15 +1453,15 @@ __main 00000000
 
 Symbol: __main
    Definitions
-      At line 416 in file Startup.s
+      At line 418 in file Startup.s
    Uses
-      At line 417 in file Startup.s
+      At line 419 in file Startup.s
 Comment: __main used once
 __use_two_region_memory 00000000
 
 Symbol: __use_two_region_memory
    Definitions
-      At line 430 in file Startup.s
+      At line 432 in file Startup.s
    Uses
       None
 Comment: __use_two_region_memory unused

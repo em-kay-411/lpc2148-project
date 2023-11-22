@@ -1,4 +1,4 @@
-#include<lpc214x.h>
+#include "lpc214x.h"
 #include "SPI.h"
 #include "card.h"
 #include "interrupts.h"
@@ -22,9 +22,6 @@ void switchToUserMode(){
 
 int main(){	
 	
-	// Declaring a function pointer to the address where kernel is being loaded in the RAM
-	
-	void (*kernel_entry_point)() = (void (*)())KERNEL_LOAD_ADDRESS;
 	
 	UartInit(9600);		 							//Initialize UART with 9600 baudrate
 	printf("\nHello\n");
@@ -32,10 +29,13 @@ int main(){
 	
 	card_init(); // Initialise card
 	enable_interrupts();	
+	
 	load_kernel(0x00);
 	
 	switchToUserMode();		// Switch to user mode
-	kernel_entry_point();	
+	
+	
+	//kernel_entry_point();	
 	
 	
 	// Halt

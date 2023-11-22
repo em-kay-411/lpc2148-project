@@ -407,6 +407,8 @@ MEMMAP          EQU     0xE01FC040      ; Memory Mapping Control
 
                 MOV     SP, R0
                 SUB     SL, SP, #USR_Stack_Size
+				
+				MSR     CPSR_c, #Mode_SVC:OR:I_Bit:OR:F_Bit
 
                 ENDIF
 

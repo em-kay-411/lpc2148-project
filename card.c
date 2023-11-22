@@ -135,9 +135,6 @@ void load_kernel(unsigned int sector)
 	printf("Start reading\n");
 	delay(1000);
 	for(i=0;i<512;i++){				//read data
-		if(ch == 0xFF || ch == 0x00){
-			return;
-		}
 		ch=spi0_read();
 		
 		if(j == 16){
@@ -145,7 +142,7 @@ void load_kernel(unsigned int sector)
 			j = 0;
 		}
 		printf("0x%02x ",ch);
-		*((volatile unsigned char *)(KERNEL_LOAD_ADDRESS + i)) = ch;
+		
 		j++;
 	}
 
