@@ -5,8 +5,6 @@
 
 unsigned char Ch;
 
-//extern void my_function(void);
-
 unsigned int s = 0;
 void load_kernel_safe(unsigned char kernelHexData[], unsigned char kernelMemory[], unsigned int size){
 for(s=0; s<size; s++){

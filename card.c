@@ -135,15 +135,16 @@ void load_kernel(unsigned int sector, unsigned char buffer[])
 	}
 	printf("Start reading\n");
 	delay(1000);
-	for(i=0;i<512;i++){				//read data
+	for(i=0;i<228;i++){				//read data
 		ch=spi0_read();
 		
 		if(j == 16){
 			printf("\n");
 			j = 0;
 		}
-		printf("0x%02x ",ch);
+		//printf("0x%02x ",ch);
 		buffer[i] = ch;
+		printf("0x%02x ",buffer[i]);
 		j++;
 	}
 
