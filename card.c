@@ -50,23 +50,23 @@ void card_init()
 		spi0_read();
 
 	/* CMD0 routine*/
-	printf("--CMD0--\n");
+	//printf("--CMD0--\n");
 	IOCLR0 = SSEL0;								//chip select low
 	send_cmd(CMD0);								 //send CMD0 to reset the card into SPI mode - IDLE state
 	ch = spi0_read();							//if response 0x01... card is initialised for SPI protocol
 	IOSET0 = SSEL0;								//chip select high
 	delay(1000);
 	if(ch == 0x01)
-		printf("response = %02x\nCard configured in SPI mode\n",ch);
+		printf("\nCard configured in SPI mode\n");
 	delay(1000);
 
 	/* CMD8 routine*/
-	printf("--CMD8 with arguments 0x00 0x00 0x01 0xAA--\n");
+	//printf("--CMD8 with arguments 0x00 0x00 0x01 0xAA--\n");
 	IOCLR0 = SSEL0;							//chip select low
 	send_cmd(CMD8);							//send CMD8 to check card version, host voltage compatibility, 
 	delay(1000);							//and expand ACMD41 capability if card is SDHC
-	printf("response = 0x%02x\n",spi0_read());		  //should be 0x01, since CMD8 works in IDLE mode only
-	printf("response arg =  ");						//should return arguments 0x00 0x00 0x01 0xAA if everything OK
+	//printf("response = 0x%02x\n",spi0_read());		  //should be 0x01, since CMD8 works in IDLE mode only
+	//printf("response arg =  ");						//should return arguments 0x00 0x00 0x01 0xAA if everything OK
 	for(i=0;i<4;i++)
 	{
 		ch = spi0_read();
@@ -77,7 +77,7 @@ void card_init()
 
 
 	/* ACMD41 routine */
-	printf("\n--ACMD41--\n");
+	// printf("\n--ACMD41--\n");
 	delay(1000);
 	do
 	{
@@ -102,13 +102,14 @@ void card_init()
 		printf("Card Initialization SUCCESS\n\n");
 }
 
-void load_kernel(unsigned int sector)
+void load_kernel(unsigned int sector, unsigned char buffer[])
 {
+	
 	unsigned char temp[6] = {0,0,0,0,0,0};
 	unsigned int timer = 300;
 	unsigned int j = 0;
 	
-	
+	printf("Loading Kernel....\n");	
 	printf("\n\nReading from sector 0x%x\n",sector);	
 	printf("--CMD17--\n");
 
@@ -142,7 +143,7 @@ void load_kernel(unsigned int sector)
 			j = 0;
 		}
 		printf("0x%02x ",ch);
-		
+		buffer[i] = ch;
 		j++;
 	}
 
@@ -151,56 +152,5 @@ void load_kernel(unsigned int sector)
 
 	IOSET0 = SSEL0;								  	//chip select high
 	printf("Read data from sector 0x%x = 0x%02x\n",sector,ch);
-	printf("Read SUCCESS\n");
+	printf("512 bytes (Sector 0) of the kernel loaded from the SD Card..\n\n");
 }
-
-/*
-void load_kernel(void)
-{
-    unsigned char temp[6] = {0, 0, 0, 0, 0, 0};
-    unsigned int timer = 300;
-    unsigned int kernel_size = 4096;// Calculate the size of your kernel image 
-
-    printf("\n\nLoading Kernel from SD card\n");
-    printf("--CMD17--\n");
-
-    temp[0] = CMD17[0];
-    temp[4] = 0; // Set the sector to 0 for the first sector
-    temp[3] = 0;
-    temp[2] = 0;
-
-    IOCLR0 = SSEL0; // Chip select low
-    send_cmd(temp); // Send CMD17 with arguments
-    do
-    {
-        ch = spi0_read();
-    } while (ch != 0xFE && --timer);
-
-    if (timer == 0)
-    {
-        printf("Read FAILED\n");
-        while (1);
-    }
-
-    printf("Start reading\n");
-    delay(1000);
-
-    // Read the entire kernel image
-    for(i = 0; i < kernel_size; i++)
-    {
-        ch = spi0_read();
-			
-				printf("%c\n", ch);
-
-        // Load the kernel code into RAM
-        *((volatile unsigned char *)(KERNEL_LOAD_ADDRESS + i)) = ch;
-    }
-
-    spi0_read(); // Read CRC (can be ignored)
-    spi0_read();
-
-    IOSET0 = SSEL0; // Chip select high
-
-    printf("Kernel Loaded SUCCESSFULLY\n");
-}
-*/

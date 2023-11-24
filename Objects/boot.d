@@ -5,3 +5,5 @@
 .\objects\boot.o: interrupts.h
 .\objects\boot.o: uart.h
 .\objects\boot.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\boot.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\boot.o: kernel.h

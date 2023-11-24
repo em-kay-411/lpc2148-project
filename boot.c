@@ -4,7 +4,12 @@
 #include "interrupts.h"
 #include "uart.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include "kernel.h"
 
+
+void (*kernel_entry_point)();
+unsigned char kernelMemory[3717];
 
 void switchToUserMode(){
 	unsigned int cpsrValue;
@@ -20,8 +25,7 @@ void switchToUserMode(){
 	}
 }
 
-int main(){	
-	
+int main(){		
 	
 	UartInit(9600);		 							//Initialize UART with 9600 baudrate
 	printf("\nHello\n");
@@ -30,12 +34,20 @@ int main(){
 	card_init(); // Initialise card
 	enable_interrupts();	
 	
-	load_kernel(0x00);
 	
-	switchToUserMode();		// Switch to user mode
+	load_kernel(0x00, kernelMemory);	
 	
 	
-	//kernel_entry_point();	
+	
+	//load_kernel_safe(kernelHexData, kernelMemory, kernelSize);
+	//kernel_entry_point = (void (*)())kernelHexData;	
+	kernel_entry_point = kernelHexData;	
+	printf("Declared entry point");
+	kernel_entry_point();
+	printf("Called entry point");
+	
+	
+	//switchToUserMode();		// Switch to user mode	
 	
 	
 	// Halt

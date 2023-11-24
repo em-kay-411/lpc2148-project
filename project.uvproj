@@ -450,6 +450,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart.c</FilePath>
             </File>
+            <File>
+              <FileName>kernel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\kernel.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
