@@ -3,15 +3,6 @@
 #include "uart.h"
 #include "stdio.h"
 
-unsigned char Ch;
-
-unsigned int s = 0;
-void load_kernel_safe(unsigned char kernelHexData[], unsigned char kernelMemory[], unsigned int size){
-for(s=0; s<size; s++){
-	kernelMemory[s] = kernelHexData[s];
-}
-}
-
 /*
 void kernelHexData(void){
 //   	printf("\r\nKernel loaded successfully....");

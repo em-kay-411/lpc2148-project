@@ -135,7 +135,7 @@ void load_kernel(unsigned int sector, unsigned char buffer[])
 	}
 	printf("Start reading\n");
 	delay(1000);
-	for(i=0;i<228;i++){				//read data
+	for(i=0;i<228;i++){				//read data //228 is the KERNEL_SIZE
 		ch=spi0_read();
 		
 		if(j == 16){
@@ -153,5 +153,5 @@ void load_kernel(unsigned int sector, unsigned char buffer[])
 
 	IOSET0 = SSEL0;								  	//chip select high
 	printf("Read data from sector 0x%x = 0x%02x\n",sector,ch);
-	printf("512 bytes (Sector 0) of the kernel loaded from the SD Card..\n\n");
+	printf("228 bytes (Sector 0) of the kernel loaded from the SD Card..\n\n");
 }
