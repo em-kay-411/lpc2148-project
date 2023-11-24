@@ -1,0 +1,5 @@
+-c --cpu ARM7TDMI -g -O0 --apcs=interwork --split_sections 
+-I C:\Keil\ARM\RV31\INC 
+-I C:\Keil\ARM\CMSIS\Include 
+-I C:\Keil\ARM\Inc\Philips 
+-o ".\Objects\uart.o" --omf_browse ".\Objects\uart.crf" --depend ".\Objects\uart.d" "uart.c"
