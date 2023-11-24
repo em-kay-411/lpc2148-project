@@ -18,7 +18,7 @@ The microcontroller interacts with the SD Card using SPI by sending commands and
 The load_kernel() function in card.c is responsible for loading the kernel into the memory. It takes in the sector of the card to be read and the memory array where the kernel image has to be stored. While loading, every byte that is read is displayed on to the terminal until the entire kernel loads. 
 
 ### RESULTS
-•	The SD Card is initialised successfully, indicated by the SPI response.
-•	All 228 bytes of the kernel load successfully into the RAM.
-•	The function to echo every keyboard interrupt on the host system, which is defined here as the kernel, takes control and starts execution.
+- The SD Card is initialised successfully, indicated by the SPI response.
+- All 228 bytes of the kernel load successfully into the RAM.
+- 	The function to echo every keyboard interrupt on the host system, which is defined here as the kernel, takes control and starts execution.
 
