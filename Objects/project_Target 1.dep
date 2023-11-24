@@ -1,6 +1,6 @@
 Dependencies for Project 'project', Target 'Target 1': (DO NOT MODIFY !)
 F (.\Startup.s)(0x655DA62B)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 525"--list .\listings\startup.lst --xref -o .\objects\startup.o --depend .\objects\startup.d)
-F (.\boot.c)(0x655F3BFD)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="525"-o .\objects\boot.o --omf_browse .\objects\boot.crf --depend .\objects\boot.d)
+F (.\boot.c)(0x656069B3)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="525"-o .\objects\boot.o --omf_browse .\objects\boot.crf --depend .\objects\boot.d)
 I (C:\Keil_v5\ARM\INC\Philips\lpc214x.h)(0x559CFE30)
 I (SPI.h)(0x655B1A14)
 I (card.h)(0x655ED5C3)
@@ -8,7 +8,7 @@ I (interrupts.h)(0x655B1A14)
 I (uart.h)(0x655B1DD7)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EF054)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599EF054)
-I (kernel.h)(0x655F3C53)
+I (kernel.h)(0x6560697E)
 F (.\card.c)(0x655F3B4A)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="525"-o .\objects\card.o --omf_browse .\objects\card.crf --depend .\objects\card.d)
 I (C:\Keil_v5\ARM\INC\Philips\lpc214x.h)(0x559CFE30)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EF054)
@@ -28,7 +28,7 @@ I (uart.h)(0x655B1DD7)
 F (.\uart.c)(0x655D7D25)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="525"-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
 I (C:\Keil_v5\ARM\INC\Philips\lpc214x.h)(0x559CFE30)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EF054)
-F (.\kernel.c)(0x655F3C45)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="525"-o .\objects\kernel.o --omf_browse .\objects\kernel.crf --depend .\objects\kernel.d)
-I (kernel.h)(0x655F3C53)
+F (.\kernel.c)(0x65606992)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="525"-o .\objects\kernel.o --omf_browse .\objects\kernel.crf --depend .\objects\kernel.d)
+I (C:\Keil_v5\ARM\INC\Philips\lpc214x.h)(0x559CFE30)
 I (uart.h)(0x655B1DD7)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EF054)
