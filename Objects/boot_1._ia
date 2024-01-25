@@ -1,6 +1,0 @@
---cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork 
--IC:\Keil_v5\ARM\RV31\INC
--IC:\Keil_v5\ARM\CMSIS\Include
--IC:\Keil_v5\ARM\INC\Philips
---pd "__UVISION_VERSION SETA 525"
---list .\listings\boot.lst --xref -o .\objects\boot_1.o --depend .\objects\boot_1.d "boot.s"

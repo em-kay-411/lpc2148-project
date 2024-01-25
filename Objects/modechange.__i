@@ -1,6 +1,0 @@
---c99 --gnu -c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections
--IC:\Keil_v5\ARM\RV31\INC
--IC:\Keil_v5\ARM\CMSIS\Include
--IC:\Keil_v5\ARM\INC\Philips
--D__UVISION_VERSION="525"
--o .\objects\modechange.o --omf_browse .\objects\modechange.crf --depend .\objects\modechange.d "modeChange.c"
